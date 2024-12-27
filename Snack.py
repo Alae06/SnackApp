@@ -16,9 +16,9 @@ menu = {
     "Limonade": 18.00
 }
 
-order = {}
+A = {}
 
-title = tk.Label(
+titre = tk.Label(
     window,
     text="Menu de snack",
     font=('Arial', 24, 'bold'),
@@ -27,16 +27,16 @@ title = tk.Label(
     pady=10,
     width=30
 )
-title.pack(pady=10)
+titre.pack(pady=10)
 
-menu_frame = tk.Frame(window, bg='#FFE4E1')
-menu_frame.pack(padx=20, pady=10)
+menu_affichage = tk.Frame(window, bg='#FFE4E1')
+menu_affichage.pack(padx=20, pady=10)
 
 row = 0
 col = 0
 for item in menu:
     item_frame = tk.Frame(
-        menu_frame,
+        menu_affichage,
         bg='#FFF0F5',
         padx=10,
         pady=10,
@@ -70,61 +70,61 @@ for item in menu:
         bg='white',
     )
     spinbox.pack(pady=5)
-    order[item] = spinbox
+    A[item] = spinbox
 
     col = col + 1
     if col > 3:
         col = 0
         row = row + 1
 
-def calculate_total():
-    total = 0
-    order_summary = "AJOUTER:\n\n"
-    has_items = False
+def calculer_totale():
+    totale = 0
+    commande = "AJOUTER:\n\n"
+    items = False
 
-    for item in order:
-        quantity = int(order[item].get())
-        if quantity > 0:
-            has_items = True
-            item_total = quantity * menu[item]
-            total = total + item_total
-            order_summary = order_summary + f"{item}: {quantity} x {menu[item]}DH = {item_total}DH\n"
+    for item in A:
+        quantité = int(A[item].get())
+        if quantité > 0:
+            items = True
+            item_total = quantité * menu[item]
+            totale = totale + item_total
+            commande = commande + f"{item}: {quantité} x {menu[item]}DH = {item_total}DH\n"
 
-    if has_items == False:
+    if items == False:
         messagebox.showwarning("commande", "SELECTIONNER QUELQUE CHOSE!")
         return
 
-    order_summary = order_summary + f"\nTotal: {total}DH"
-    messagebox.showinfo("Total", order_summary)
+    commande = commande + f"\nTotale: {totale}DH"
+    messagebox.showinfo("Totale", commande)
 
-def reset_order():
-    for item in order:
-        order[item].delete(0, tk.END)
-        order[item].insert(0, "0")
+def annuler_commande():
+    for item in A:
+        A[item].delete(0, tk.END)
+        A[item].insert(0, "0")
 
-calculate_button = tk.Button(
+calcule_button = tk.Button(
     window,
     text="Calculer Total",
-    command=calculate_total,
+    command=calculer_totale,
     font=('Arial', 12, 'bold'),
     bg='#FF6B6B',
     fg='white',
     padx=20,
     pady=10,
 )
-calculate_button.pack(pady=20)
+calcule_button.pack(pady=20)
 
-reset_button = tk.Button(
+annuler_button = tk.Button(
     window,
     text="SUPPRIMER",
-    command=reset_order,
+    command=annuler_commande,
     font=('Arial', 12),
     bg='#4A4A4A',
     fg='white',
     padx=20,
     pady=5,
 )
-reset_button.pack(pady=10)
+annuler_button.pack(pady=10)
 
 window.mainloop()
 
